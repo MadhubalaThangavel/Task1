@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title> Users Data</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        .container{
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            flex-direction: row; 
+            align-items: center;
+            padding-left: 10px;
+            justify-content:space-between;
+        }
+        .image-container {
+            flex-basis: 100%;
+            align-items: center;
+            margin-bottom: 10px; 
+        }
+        .image-container img {
+            max-width: 100px;
+            margin-right: 10px; 
+        }
+    </style>
+    </head>
+        <body>
+            <div ng-app='myApp' ng-controller='userCtrl'>
+                <div class="container">
+                    <div class="image-container" ng-repeat = "user in users">
+                        <img src="{{user.avatar_url}}" alt="{{user.login}}">
+                        <div>{{user.login}} </div>
+                        <a href="{{user.url}}">{{user.url}}</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+            <script src="script.js" ></script>
+            </div>
+        </body>
+</html>
