@@ -1,39 +1,80 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title> Users Data</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-utils-pagination/0.11.1/dirPagination.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
     <style>
-        .container{
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            flex-direction: row; 
-            align-items: center;
-            padding-left: 10px;
-            justify-content:space-between;
+        .header{
+            background-color: grey;
+            text-align: center;
         }
-        .image-container {
-            flex-basis: 100%;
-            align-items: center;
-            margin-bottom: 10px; 
+        .row{
+            column-count: 3;
+            column-gap: 10px;
         }
-        .image-container img {
-            max-width: 100px;
-            margin-right: 10px; 
+        .user-card{
+            display: inline-block;
+            width: 70%;
+            margin-bottom: 30px;
+            text-align: center;
         }
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 80%;
+            margin:  auto; 
+            display: block;
+        }
+        .user-details {
+            margin-top: 10px;
+        }
+        .user-name {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .text-center{
+            padding-top: 20px;
+        }
+       
     </style>
     </head>
         <body>
-            <div ng-app='myApp' ng-controller='userCtrl'>
+            <div class="header">
+                <h1>User Data List </h1>    
+            </div>
+            <div ng-app="myApp" ng-controller="userCtrl">
                 <div class="container">
-                    <div class="image-container" ng-repeat = "user in users">
-                        <img src="{{user.avatar_url}}" alt="{{user.login}}">
-                        <div>{{user.login}} </div>
-                        <a href="{{user.url}}">{{user.url}}</a>
+                    <div class="row">
+                    <div class="user-card" ng-repeat="user in pagedUsers">
+                                <img class="avatar" src="{{user.avatar_url}}" alt="{{user.login}}">
+                             <div class="user-details">
+                            <div class="user-name">{{user.login | uppercase}}</div>
+                            <a type="button" class="btn btn-primary btn-sm" href="{{user.url}}"> Profile</a>
+                            </div>
                     </div>
                     </div>
                 </div>
+                <div class="text-center">
+                                <ul class="pagination">
+                                    <li ng-class="{disabled: currentPage === 1}">
+                                        <a ng-click="prevPage()" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li ng-repeat="page in pages" ng-class="{active: page === currentPage}">
+                                          <a ng-click="setPage(page)" href="#">{{ page }}</a>
+                                    </li>
+                                    <li ng-class="{disabled: currentPage === totalPages}">
+                                        <a ng-click="nextPage()" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                </ul>
+                            </div>
             </div>
             <div>
             <script src="script.js" ></script>

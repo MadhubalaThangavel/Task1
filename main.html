@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-app="myApp" ng-controller="userDetailsCtrl">
+        <h1>User Details</h1>
+        <div>
+            <h2>User: {{user.login}}</h2>
+            <p>Followers Count: {{user.followers}}</p>
+        </div>
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('userDetailsCtrl', function ($scope, $http) {
+            // Get the user URL from the query parameters in the URL
+            var urlParams = new URLSearchParams(window.location.search);
+            var userUrl = urlParams.get("main.html");
+
+            // Fetch user details from the user URL
+            $http.get(userUrl)
+                .then(function (response) {
+                    $scope.user = response.data;
+                })
+                .catch(function (error) {
+                    console.error("Error fetching user details:", error);
+                });
+        });
+    </script>
+</body>
+</html>
